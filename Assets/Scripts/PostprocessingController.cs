@@ -4,7 +4,7 @@ using UnityEngine;
 public class PostprocessingController : MonoBehaviour
 {
  public Shader postProcessShader;
- private Material postProcessMaterial;
+ Material postProcessMaterial;
  
  void OnRenderImage(RenderTexture src, RenderTexture dest)
  {
@@ -12,9 +12,8 @@ public class PostprocessingController : MonoBehaviour
      {
          postProcessMaterial = new Material(postProcessShader);
      }
- 
- 
-   RenderTexture renderTexture = RenderTexture.GetTemporary(
+     
+     RenderTexture renderTexture = RenderTexture.GetTemporary(
    src.width, //Width
    src.height,  //Height
    0,  //Depth buffer

@@ -41,7 +41,8 @@ Shader "Unlit/TragedyScreenspace"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                return col * fixed4(1,0,0,1);
+              //  return col * fixed4(1,0,0,1);
+              return fixed4(1,0,0,1);
             }
             ENDCG
         }
