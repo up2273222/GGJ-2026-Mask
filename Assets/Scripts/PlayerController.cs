@@ -14,9 +14,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     private float jumpCooldown;
     private float jumpTimer;
+    private bool jumpPressed;
     
     [SerializeField] private Transform groundCheck;
     [SerializeField] private bool isGrounded;
+    
     
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
@@ -33,15 +35,17 @@ public class PlayerController : MonoBehaviour
     {
         Inputs();
         GroundCheck();
+        
     }
     
     void FixedUpdate()
     {
-        jumpTimer -= Time.deltaTime;
+        jumpTimer -= Time.fixedDeltaTime;
         MovePlayer();
         if (isGrounded && Input.GetKey(KeyCode.Space) && jumpTimer <= 0)
         {
             jumpTimer = jumpCooldown;
+            //jumpPressed = false;
             Jump();
         }
     }
@@ -55,7 +59,17 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = orientation.forward * inputY + orientation.right * inputX;
         
-        rb.AddForce(moveDirection.normalized * (moveSpeed * 10f), ForceMode.Force);
+        float currentSpeed = rb.linearVelocity.magnitude;
+
+        if (isGrounded)
+        {
+            rb.AddForce(moveDirection.normalized * (moveSpeed * 10f), ForceMode.Force);
+        }
+        else if (!isGrounded)
+        {
+            rb.AddForce(moveDirection.normalized * (moveSpeed * 10f * 0.45f), ForceMode.Force);
+        }
+        
         SpeedControl();
     }
 
