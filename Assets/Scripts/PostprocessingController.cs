@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [ExecuteInEditMode, ImageEffectAllowedInSceneView]
@@ -5,6 +6,11 @@ public class PostprocessingController : MonoBehaviour
 {
  public Shader postProcessShader;
  Material postProcessMaterial;
+
+ public float vignetteRadius;
+ public float vignetteFeather;
+ public float temperature;
+
  
  void OnRenderImage(RenderTexture src, RenderTexture dest)
  {
@@ -17,11 +23,16 @@ public class PostprocessingController : MonoBehaviour
    src.width, //Width
    src.height,  //Height
    0,  //Depth buffer
-   src.format  //Format
+   RenderTextureFormat.ARGBHalf  //Format
    );
    
-   Graphics.Blit(src, renderTexture, postProcessMaterial,0);
-   Graphics.Blit(src, renderTexture, postProcessMaterial,1);
+   postProcessMaterial.SetFloat("_vignetteRadius", vignetteRadius);
+   postProcessMaterial.SetFloat("_vignetteFeather", vignetteFeather);
+   postProcessMaterial.SetFloat("_temperature",(float) temperature);
+   //Graphics.Blit(src, renderTexture, postProcessMaterial, 0);
+   //Graphics.Blit(renderTexture, dest, postProcessMaterial, 1);
+   
+   Graphics.Blit(src, renderTexture, postProcessMaterial, 0);
    Graphics.Blit(renderTexture, dest);
    
    RenderTexture.ReleaseTemporary(renderTexture);
