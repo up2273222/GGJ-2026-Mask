@@ -20,7 +20,8 @@ public class PostprocessingController : MonoBehaviour
    src.format  //Format
    );
    
-   Graphics.Blit(src, renderTexture, postProcessMaterial);
+   Graphics.Blit(src, renderTexture, postProcessMaterial,0);
+   Graphics.Blit(src, renderTexture, postProcessMaterial,1);
    Graphics.Blit(renderTexture, dest);
    
    RenderTexture.ReleaseTemporary(renderTexture);
