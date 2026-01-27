@@ -381,9 +381,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PostprocessingController
   postProcessShader: {fileID: 4800000, guid: 404ee424af59e934da202df7bfc5c79b, type: 3}
-  vignetteRadius: 0.95
+  vignetteRadius: 0.89
   vignetteFeather: 0.41
-  temperature: 37053
+  temperature: 12295
+  saturationMult: 0.23
 --- !u!1 &1685171791
 GameObject:
   m_ObjectHideFlags: 0
