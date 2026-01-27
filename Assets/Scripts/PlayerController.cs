@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Transform groundCheck;
     [SerializeField] private bool isGrounded;
-    
+
+    [SerializeField] private float levelOffset;
     
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
@@ -119,16 +120,23 @@ public class PlayerController : MonoBehaviour
     
     private void OnLevelChange(WorldState newState)
     {
-        //Debug.Log("Player Notified of Level Change: " + newState.ToString());
+        rb.isKinematic = true;
         if (newState == WorldState.Comedy)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 40.0f, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, transform.position.y + levelOffset, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, 41f, transform.position.z);
+            rb.position = new Vector3(transform.position.x, transform.position.y + levelOffset + 0.5f, transform.position.z);
             Debug.Log("Teleported Up to Comedy");
         }
         else
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 40.0f, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, transform.position.y - levelOffset, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+            rb.position = new Vector3(transform.position.x, transform.position.y - levelOffset + 0.5f, transform.position.z);
             Debug.Log("Teleported Down to Tragedy");
         }
+
+        rb.isKinematic = false;
+
     }
 }
