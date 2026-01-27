@@ -1672,7 +1672,6 @@ GameObject:
   - component: {fileID: 591390075}
   - component: {fileID: 591390074}
   - component: {fileID: 591390073}
-  - component: {fileID: 591390078}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: MainCamera
@@ -1714,7 +1713,7 @@ MonoBehaviour:
   temperature: 13000
   saturationMult: 0.4
   fogStart: 10
-  fogEnd: 100
+  fogEnd: 50
   cameraTransform: {fileID: 1204043790}
 --- !u!114 &591390074
 MonoBehaviour:
@@ -1826,38 +1825,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &591390078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591390071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBrain
-  ShowDebugText: 0
-  ShowCameraFrustum: 1
-  IgnoreTimeScale: 0
-  WorldUpOverride: {fileID: 1204043790}
-  ChannelMask: -1
-  UpdateMethod: 2
-  BlendUpdateMethod: 1
-  LensModeOverride:
-    Enabled: 0
-    DefaultMode: 2
-  DefaultBlend:
-    Style: 1
-    Time: 2
-    CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  CustomBlends: {fileID: 0}
 --- !u!1 &599118498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2222,11 +2189,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   orientation: {fileID: 290368034}
+  levelChangeManager: {fileID: 0}
   moveSpeed: 7
   dragAmount: 5
   jumpForce: 7
   groundCheck: {fileID: 170694909}
   isGrounded: 0
+  levelOffset: 0
 --- !u!54 &647674432
 Rigidbody:
   m_ObjectHideFlags: 0

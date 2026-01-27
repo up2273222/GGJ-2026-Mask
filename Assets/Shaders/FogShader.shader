@@ -35,14 +35,14 @@ Shader "Unlit/FogShader"
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
                 float3 worldPos : TEXCOORD1;
+                float3 ray : TEXCOORD2;
             };
             
 
             sampler2D _MainTex, _CameraDepthTexture;
             float4 _MainTex_ST;
+            float3 _FrustumCorners[4];
             float _fogStart, _fogEnd;
-            
-            float4 _camPos;
             
             
             
@@ -53,6 +53,7 @@ Shader "Unlit/FogShader"
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 o.worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;
+                o.ray = _FrustumCorners[v.uv.x + 2 * v.uv.y];
                 return o;
             }
 
@@ -62,7 +63,8 @@ Shader "Unlit/FogShader"
               
               float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
               depth = Linear01Depth(depth);
-              float viewDistance = depth * _ProjectionParams.z - _ProjectionParams.y;
+             // float viewDistance = depth * _ProjectionParams.z - _ProjectionParams.y;
+              float viewDistance = length(i.ray * depth);
               float fogFactor =  1.0 -((viewDistance - _fogStart) / (_fogEnd - _fogStart));
               fogFactor = saturate(fogFactor);
               

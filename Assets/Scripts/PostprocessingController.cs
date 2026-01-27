@@ -39,8 +39,23 @@ public class PostprocessingController : MonoBehaviour
      if (fogMaterial == null)
      {
          camera = GetComponent<Camera>();
+         frustumCorners = new Vector3[4];
+         vectorArray = new Vector4[4];
          fogMaterial = new Material(fogShader);
      }
+
+     camera.CalculateFrustumCorners(
+         new Rect(0f, 0f, 1f, 1f),
+         camera.farClipPlane,
+         camera.stereoActiveEye,
+         frustumCorners
+     );
+     
+     vectorArray[0] = frustumCorners[0];
+     vectorArray[1] = frustumCorners[3];
+     vectorArray[2] = frustumCorners[1];
+     vectorArray[3] = frustumCorners[2];
+     fogMaterial.SetVectorArray("_FrustumCorners", vectorArray);
      
      
     
@@ -74,19 +89,18 @@ public class PostprocessingController : MonoBehaviour
    
    fogMaterial.SetFloat("_fogStart", fogStart);
    fogMaterial.SetFloat("_fogEnd", fogEnd);
-   fogMaterial.SetVector("_camPos", cameraTransform.position);
    
    
-   
+   /*
    Graphics.Blit(src, renderTexture, postProcessMaterial, 0);
    Graphics.Blit(renderTexture, renderTexture2, postProcessMaterial, 1);
    Graphics.Blit(renderTexture2, renderTexture3, fogMaterial);
    Graphics.Blit(renderTexture3, dest, postProcessMaterial, 2);
+   */
    
    
    
-   
-   //Graphics.Blit(src, dest, fogMaterial, 0);
+   Graphics.Blit(src, dest, fogMaterial, 0);
    //Graphics.Blit(renderTexture, dest);
    
    
