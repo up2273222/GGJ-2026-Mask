@@ -1,10 +1,11 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform orientation;
-    
+    [SerializeField] private BroadCasterClass levelChangeManager;
     [SerializeField] private float moveSpeed;
     private float inputX;
     private float inputY;
@@ -23,6 +24,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
 
+    void OnEnable()
+    {
+        //levelChangeManager.AddObserver(this);
+        LevelSwapManager.OnLevelChanged += OnLevelChange;
+    }
+
+    void OnDisable()
+    {
+        //levelChangeManager.RemoveObserver(this);
+        LevelSwapManager.OnLevelChanged -= OnLevelChange;
+    }
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -103,5 +115,20 @@ public class PlayerController : MonoBehaviour
     {
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0 , rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+    
+    private void OnLevelChange(WorldState newState)
+    {
+        //Debug.Log("Player Notified of Level Change: " + newState.ToString());
+        if (newState == WorldState.Comedy)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 40.0f, transform.position.z);
+            Debug.Log("Teleported Up to Comedy");
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - 40.0f, transform.position.z);
+            Debug.Log("Teleported Down to Tragedy");
+        }
     }
 }
