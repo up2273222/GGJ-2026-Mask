@@ -18,6 +18,9 @@ public class PostprocessingController : MonoBehaviour
  public float vignetteFeather;
  public float temperature;
  public float saturationMult;
+ public float fogStart, fogEnd;
+
+ public Transform cameraTransform;
 
  private void Awake()
  {
@@ -69,17 +72,21 @@ public class PostprocessingController : MonoBehaviour
    postProcessMaterial.SetFloat("_temperature", temperature);
    postProcessMaterial.SetFloat("_saturationMult", saturationMult);
    
+   fogMaterial.SetFloat("_fogStart", fogStart);
+   fogMaterial.SetFloat("_fogEnd", fogEnd);
+   fogMaterial.SetVector("_camPos", cameraTransform.position);
    
-   /*
+   
+   
    Graphics.Blit(src, renderTexture, postProcessMaterial, 0);
    Graphics.Blit(renderTexture, renderTexture2, postProcessMaterial, 1);
    Graphics.Blit(renderTexture2, renderTexture3, fogMaterial);
    Graphics.Blit(renderTexture3, dest, postProcessMaterial, 2);
-   */
    
    
    
-   Graphics.Blit(src, dest, fogMaterial, 0);
+   
+   //Graphics.Blit(src, dest, fogMaterial, 0);
    //Graphics.Blit(renderTexture, dest);
    
    

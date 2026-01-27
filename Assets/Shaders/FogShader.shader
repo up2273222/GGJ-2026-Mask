@@ -38,8 +38,11 @@ Shader "Unlit/FogShader"
             };
             
 
-            sampler2D _MainTex;
+            sampler2D _MainTex, _CameraDepthTexture;
             float4 _MainTex_ST;
+            float _fogStart, _fogEnd;
+            
+            float4 _camPos;
             
             
             
@@ -55,19 +58,19 @@ Shader "Unlit/FogShader"
 
             float4 frag (v2f i) : SV_Target
             {
-               float viewDistance = length(_WorldSpaceCameraPos - i.worldPos);
-               
-               float fogStart = 0;
-               float fogEnd = 50;
-               
-          
-              float fogFactor =  1.0 -((viewDistance - fogStart) / (fogEnd - fogStart));
-              fogFactor = saturate(fogFactor);
             
-                float3 col = tex2D(_MainTex, i.uv).xyz;
-                float3 fogCol = lerp(unity_FogColor.xyz,col, fogFactor);
-
-                return float4(fogCol,1);
+              
+              float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
+              depth = Linear01Depth(depth);
+              float viewDistance = depth * _ProjectionParams.z - _ProjectionParams.y;
+              float fogFactor =  1.0 -((viewDistance - _fogStart) / (_fogEnd - _fogStart));
+              fogFactor = saturate(fogFactor);
+              
+              
+              
+              float3 col = tex2D(_MainTex, i.uv).xyz;
+              float3 fogCol = lerp(unity_FogColor.xyz,col, fogFactor);
+              return float4(fogCol,1);
             }
             ENDCG
         }
