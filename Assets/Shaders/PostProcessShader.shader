@@ -109,7 +109,26 @@ Shader "Unlit/PostProcessShader"
             ENDCG
         }
 
-        Pass //VIGNETTE 1
+        Pass //Desaturate 1
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+                    
+            float _saturationMult;
+                    
+            float4 frag (v2f i) : SV_Target
+            {
+                float4 col = tex2D(_MainTex, i.uv);
+                float3 desaturateCol = dot(col.xyz,float3(0.212,0.715,0.072));
+                col.xyz = lerp(desaturateCol,col.xyz, _saturationMult);
+                return col;
+            }
+            ENDCG
+                
+        }
+
+        Pass //VIGNETTE 2
         {
             CGPROGRAM
             #pragma vertex vert
