@@ -128,7 +128,11 @@ Shader "Unlit/PostProcessShader"
                 
         }
 
-        Pass //VIGNETTE 2
+      
+
+
+
+        Pass //VIGNETTE 1
         {
             CGPROGRAM
             #pragma vertex vert
@@ -149,8 +153,6 @@ Shader "Unlit/PostProcessShader"
           
             }
             ENDCG
-
-
         }
 
     }
