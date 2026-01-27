@@ -10,8 +10,8 @@ public class GuardFOV : MonoBehaviour
 
     public GameObject PlayerReference;
 
-    public LayerMask TargetMask;
-    public LayerMask ObstructionMask;
+    [SerializeField] private LayerMask TargetMask;
+    [SerializeField] private LayerMask ObstructionMask;
 
     public bool PlayerDetected;
 
