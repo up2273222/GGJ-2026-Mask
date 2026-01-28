@@ -15,34 +15,44 @@ public class PostprocessingController : MonoBehaviour
  private Vector3[] frustumCorners;
  private Vector4[] vectorArray;
 
- public float vignetteRadius;
  public float vignetteFeather;
- public float temperature;
- public float saturationMult;
- public float fogStart, fogEnd;
 
+ private float currentVignetteRadius; 
+ private float currentTemperature;
+ private float currentSaturationMult;
+ private float currentFogStart, currentFogEnd;
+
+ [Header("Tragedy vals")] 
+ public float tragedyFogStart;
+ public float tragedyFogEnd;
+ public float tragedyTemperature;
+ public float tragedySaturationMult;
+ public float tragedyRadius;
+
+ [Header("Comedy vals")] 
+ public float comedyFogStart;
+ public float comedyFogEnd;
+ public float comedyTemperature;
+ public float comedySaturationMult;
+ public float comedyRadius;
  
  
-
- private bool isFading;
-
+ 
  public WorldState currentState;
  
  
 
- public Transform cameraTransform;
-
 
  private void Awake()
  {
-     
+     currentState = WorldState.Tragedy;
  }
 
  private void Update()
  {
      if(Input.GetKeyDown(KeyCode.E))
      {
-         StartCoroutine(ChangeValue(fogEnd,0,1,v => fogEnd = v));
+         SwitchPostProcessState();
          
      }
  }
@@ -99,13 +109,13 @@ public class PostprocessingController : MonoBehaviour
          RenderTextureFormat.ARGBHalf  //Format
      );
    
-   postProcessMaterial.SetFloat("_vignetteRadius", vignetteRadius);
+   postProcessMaterial.SetFloat("_vignetteRadius", currentVignetteRadius);
    postProcessMaterial.SetFloat("_vignetteFeather", vignetteFeather);
-   postProcessMaterial.SetFloat("_temperature", temperature);
-   postProcessMaterial.SetFloat("_saturationMult", saturationMult);
+   postProcessMaterial.SetFloat("_temperature", currentTemperature);
+   postProcessMaterial.SetFloat("_saturationMult", currentSaturationMult);
    
-   fogMaterial.SetFloat("_fogStart", fogStart);
-   fogMaterial.SetFloat("_fogEnd", fogEnd);
+   fogMaterial.SetFloat("_fogStart", currentFogStart);
+   fogMaterial.SetFloat("_fogEnd", currentFogEnd);
    
    
    
@@ -125,22 +135,49 @@ public class PostprocessingController : MonoBehaviour
    RenderTexture.ReleaseTemporary(renderTexture2);
    RenderTexture.ReleaseTemporary(renderTexture3);
  }
+
+
+ private void SwitchPostProcessState()
+ {
+     switch (currentState)
+     {
+         case WorldState.Comedy:
+         {
+             //Change to tragedy
+             StartCoroutine(ChangeToTragedy(1));
+             currentState = WorldState.Tragedy;
+             break;
+         }
+         case WorldState.Tragedy:
+         {
+             StartCoroutine(ChangeToComedy(1));
+             currentState = WorldState.Comedy;
+             break;
+         }
+     }
+     
+ }
  
- private IEnumerator ChangeValue(float start, float end, float duration, Action<float> value)
+ private IEnumerator ChangeToTragedy(float duration)
  {
      float timeElapsed = 0f;
-
+     float initialFogEnd = currentFogEnd;
+     
      while (timeElapsed < duration)
      {
          timeElapsed += Time.deltaTime;
          float t = timeElapsed / duration;
-         value(Mathf.Lerp(start, end, t));
+         currentFogEnd = Mathf.Lerp(initialFogEnd, 0, t);
          yield return null;
      }
-     value(end);
+     currentFogEnd = 0;
      
      yield return new WaitForSeconds(0.5f);
-     //move player?
+     //move player
+     currentTemperature = tragedyTemperature;
+     currentVignetteRadius = tragedyRadius;
+     currentTemperature = tragedyTemperature;
+     currentSaturationMult = tragedySaturationMult;
      yield return new WaitForSeconds(0.5f);
      
      timeElapsed = 0f;
@@ -149,10 +186,44 @@ public class PostprocessingController : MonoBehaviour
      {
          timeElapsed += Time.deltaTime;
          float t = timeElapsed / duration;
-         value(Mathf.Lerp(end, start, t));
+         currentFogEnd = Mathf.Lerp(0, tragedyFogEnd, t);
          yield return null;
      }
-     value(start);
+     currentFogEnd = tragedyFogEnd;
+ }
+
+ private IEnumerator ChangeToComedy(float duration)
+ {
+     float timeElapsed = 0f;
+     float initialFogEnd = currentFogEnd;
+     
+     while (timeElapsed < duration)
+     {
+         timeElapsed += Time.deltaTime;
+         float t = timeElapsed / duration;
+         currentFogEnd = Mathf.Lerp(initialFogEnd, 0, t);
+         yield return null;
+     }
+     currentFogEnd = 0;
+     
+     yield return new WaitForSeconds(0.5f);
+     //move player
+     currentTemperature = tragedyTemperature;
+     currentVignetteRadius = comedyRadius;
+     currentTemperature = comedyTemperature;
+     currentSaturationMult = comedySaturationMult;
+     yield return new WaitForSeconds(0.5f);
+     
+     timeElapsed = 0f;
+     
+     while (timeElapsed < duration)
+     {
+         timeElapsed += Time.deltaTime;
+         float t = timeElapsed / duration;
+         currentFogEnd = Mathf.Lerp(0, comedyFogEnd, t);
+         yield return null;
+     }
+     currentFogEnd = comedyFogEnd;
  }
  
 }
