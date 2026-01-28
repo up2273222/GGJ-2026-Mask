@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform orientation;
-    [SerializeField] private BroadCasterClass levelChangeManager;
+    [SerializeField] private LevelSwapManager levelChangeManager;
     [SerializeField] private float moveSpeed;
     private float inputX;
     private float inputY;
@@ -104,9 +104,9 @@ public class PlayerController : MonoBehaviour
 
     private void GroundCheck()
     {
-        float sphereCastRadius = capsuleCollider.radius - 0.2f;
+        float sphereCastRadius = 1.0f;
         Vector3 sphereCastOrigin = groundCheck.position;
-        isGrounded = Physics.SphereCast(sphereCastOrigin, sphereCastRadius, Vector3.down, out RaycastHit hit, 1f);
+        isGrounded = Physics.SphereCast(sphereCastOrigin, sphereCastRadius, Vector3.down, out RaycastHit hit, 0.25f);
         
         if (isGrounded)
         {
@@ -129,16 +129,28 @@ public class PlayerController : MonoBehaviour
         
         if (newState == WorldState.Comedy)
         {
-            //transform.position = new Vector3(transform.position.x, transform.position.y + levelOffset, transform.position.z);
-            //transform.position = new Vector3(transform.position.x, 41f, transform.position.z);
+            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y + levelOffset + 1.0f, transform.position.z), new Vector3(0.7f, 0.15f, 0.7f), Quaternion.identity).Length > 0;
+            if (isTeleportAreaBlocked)
+            {
+                Debug.LogWarning("Area Not Viable for teleport");
+                levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
+                return;
+            }
             rb.position = new Vector3(transform.position.x, transform.position.y + levelOffset, transform.position.z);
+            levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
             Debug.Log("Teleported Up to Comedy");
         }
         else
         {
-            //transform.position = new Vector3(transform.position.x, transform.position.y - levelOffset, transform.position.z);
-            //transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y - levelOffset + 1.0f, transform.position.z), new Vector3(0.7f, 0.15f, 0.7f), Quaternion.identity).Length > 0;
+            if (isTeleportAreaBlocked)
+            {
+                Debug.LogWarning("Area Not Viable for teleport");
+                levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
+                return;
+            }
             rb.position = new Vector3(transform.position.x, transform.position.y - levelOffset, transform.position.z);
+            levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
             Debug.Log("Teleported Down to Tragedy");
         }
         
