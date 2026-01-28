@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Mesh playerMesh;
     
     private bool justSwitched;
+    private bool isTeleporting;
     
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
@@ -64,14 +65,19 @@ public class PlayerController : MonoBehaviour
             justSwitched = false;
             return;
         }
-        jumpTimer -= Time.fixedDeltaTime;
-        MovePlayer();
-        if (isGrounded && Input.GetKey(KeyCode.Space) && jumpTimer <= 0)
+
+        if (!isTeleporting)
         {
-            jumpTimer = jumpCooldown;
-            //jumpPressed = false;
-            Jump();
+            jumpTimer -= Time.fixedDeltaTime;
+            MovePlayer();
+            if (isGrounded && Input.GetKey(KeyCode.Space) && jumpTimer <= 0)
+            {
+                jumpTimer = jumpCooldown;
+                //jumpPressed = false;
+                Jump();
+            }
         }
+        
     }
     private void Inputs()
     {
@@ -131,7 +137,8 @@ public class PlayerController : MonoBehaviour
     
     private void OnLevelChange(WorldState newState)
     {
-        
+        //isTeleporting = true;
+        Debug.Log("Teleporting");
         if (newState == WorldState.Comedy)
         {
             bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y + levelOffset + 1.0f, transform.position.z), new Vector3(0.7f, 0.15f, 0.7f), Quaternion.identity).Length > 0;
@@ -139,6 +146,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.LogWarning("Area Not Viable for teleport");
                 levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
+                isTeleporting = false;
                 return;
             }
             levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
@@ -152,29 +160,33 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.LogWarning("Area Not Viable for teleport");
                 levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
+                isTeleporting = false;
                 return;
             }
             levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
             StartCoroutine(WaitTeleportTragedy(1.5f));
             
         }
-        
+        Debug.Log("Teleporting Finished");
+        //isTeleporting = false;
         justSwitched = true;
     }
 
     private IEnumerator WaitTeleportComedy(float duration)
     {
+        isTeleporting = true;
         yield return new WaitForSeconds(duration);
         rb.position = new Vector3(transform.position.x, transform.position.y + levelOffset, transform.position.z);
-            
+        isTeleporting = false;
         Debug.Log("Teleported Up to Comedy");
     }
 
     private IEnumerator WaitTeleportTragedy(float duration)
     {
+        isTeleporting = true;
         yield return new WaitForSeconds(duration);
         rb.position = new Vector3(transform.position.x, transform.position.y - levelOffset, transform.position.z);
-            
+        isTeleporting = false;
         Debug.Log("Teleported Down to Tragedy");
     }
     
