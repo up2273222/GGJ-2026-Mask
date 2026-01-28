@@ -137,7 +137,6 @@ public class PlayerController : MonoBehaviour
     
     private void OnLevelChange(WorldState newState)
     {
-        //isTeleporting = true;
         Debug.Log("Teleporting");
         if (newState == WorldState.Comedy)
         {
@@ -168,15 +167,19 @@ public class PlayerController : MonoBehaviour
             
         }
         Debug.Log("Teleporting Finished");
-        //isTeleporting = false;
         justSwitched = true;
     }
 
     private IEnumerator WaitTeleportComedy(float duration)
     {
         isTeleporting = true;
+        Vector3 previousVelocity = rb.linearVelocity;
+        rb.linearVelocity = Vector3.zero;
+        rb.useGravity = false;
         yield return new WaitForSeconds(duration);
         rb.position = new Vector3(transform.position.x, transform.position.y + levelOffset, transform.position.z);
+        rb.useGravity = true;
+        rb.linearVelocity = previousVelocity * 1.5f;
         isTeleporting = false;
         Debug.Log("Teleported Up to Comedy");
     }
@@ -184,8 +187,13 @@ public class PlayerController : MonoBehaviour
     private IEnumerator WaitTeleportTragedy(float duration)
     {
         isTeleporting = true;
+        Vector3 previousVelocity = rb.linearVelocity;
+        rb.linearVelocity = Vector3.zero;
+        rb.useGravity = false;
         yield return new WaitForSeconds(duration);
         rb.position = new Vector3(transform.position.x, transform.position.y - levelOffset, transform.position.z);
+        rb.useGravity = true;
+        rb.linearVelocity = previousVelocity * 1.5f;
         isTeleporting = false;
         Debug.Log("Teleported Down to Tragedy");
     }
