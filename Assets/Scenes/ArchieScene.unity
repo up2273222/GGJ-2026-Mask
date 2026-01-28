@@ -1708,16 +1708,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PostprocessingController
   postProcessShader: {fileID: 4800000, guid: 404ee424af59e934da202df7bfc5c79b, type: 3}
   fogShader: {fileID: 4800000, guid: e9e87d2a73536b9489315b71ce8d2678, type: 3}
+  vignetteFeather: 0.8
   tragedyFogStart: 0
   tragedyFogEnd: 50
   tragedyTemperature: 13000
   tragedySaturationMult: 0.4
   tragedyRadius: 1
   comedyFogStart: 0
-  comedyFogEnd: 5000
+  comedyFogEnd: 500
   comedyTemperature: 6500
   comedySaturationMult: 1
-  comedyRadius: 10
+  comedyRadius: 1.5
   currentState: 1
 --- !u!114 &591390074
 MonoBehaviour:

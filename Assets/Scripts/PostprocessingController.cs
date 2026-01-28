@@ -175,7 +175,6 @@ public class PostprocessingController : MonoBehaviour
      yield return new WaitForSeconds(0.5f);
      //move player
      currentTemperature = tragedyTemperature;
-     currentVignetteRadius = tragedyRadius;
      currentTemperature = tragedyTemperature;
      currentSaturationMult = tragedySaturationMult;
      yield return new WaitForSeconds(0.5f);
@@ -187,6 +186,7 @@ public class PostprocessingController : MonoBehaviour
          timeElapsed += Time.deltaTime;
          float t = timeElapsed / duration;
          currentFogEnd = Mathf.Lerp(0, tragedyFogEnd, t);
+         currentVignetteRadius = Mathf.Lerp(comedyRadius,tragedyRadius, t);
          yield return null;
      }
      currentFogEnd = tragedyFogEnd;
@@ -209,7 +209,6 @@ public class PostprocessingController : MonoBehaviour
      yield return new WaitForSeconds(0.5f);
      //move player
      currentTemperature = tragedyTemperature;
-     currentVignetteRadius = comedyRadius;
      currentTemperature = comedyTemperature;
      currentSaturationMult = comedySaturationMult;
      yield return new WaitForSeconds(0.5f);
@@ -221,6 +220,7 @@ public class PostprocessingController : MonoBehaviour
          timeElapsed += Time.deltaTime;
          float t = timeElapsed / duration;
          currentFogEnd = Mathf.Lerp(0, comedyFogEnd, t);
+         currentVignetteRadius = Mathf.Lerp(tragedyRadius, comedyRadius, t);
          yield return null;
      }
      currentFogEnd = comedyFogEnd;
