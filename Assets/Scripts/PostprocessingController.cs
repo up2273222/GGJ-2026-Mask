@@ -139,7 +139,9 @@ public class PostprocessingController : MonoBehaviour
      }
      value(end);
      
-     yield return new WaitForSeconds(1);
+     yield return new WaitForSeconds(0.5f);
+     //move player?
+     yield return new WaitForSeconds(0.5f);
      
      timeElapsed = 0f;
      
@@ -151,8 +153,6 @@ public class PostprocessingController : MonoBehaviour
          yield return null;
      }
      value(start);
-
-    
  }
  
 }
