@@ -3,13 +3,13 @@ using UnityEditor;
 using System.Runtime.InteropServices;
 using UnityEngine.UIElements;
 
-[CustomEditor(typeof(GuardFOV))]
+[CustomEditor(typeof(Guard))]
 public class GuardFOVVisualisation : Editor
 {
 
     private void OnSceneGUI()
     {
-        GuardFOV fov = (GuardFOV)target;
+        Guard fov = (Guard)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.Radius);
 
