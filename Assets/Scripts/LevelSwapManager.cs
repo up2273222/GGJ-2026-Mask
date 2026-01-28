@@ -9,6 +9,7 @@ public enum WorldState
 public class LevelSwapManager : BroadCasterClass
 {
     public static event Action<WorldState> OnLevelChanged;
+    public static event Action<WorldState> SwapCheckOutcomeSuccessful;
     
     private WorldState _currentState = WorldState.Comedy;
     private WorldState _nextState;
@@ -40,9 +41,12 @@ public class LevelSwapManager : BroadCasterClass
     
     public void LevelSwitchSuccessful(bool result)
     {
+        
         if (result)
         {
             _currentState = _nextState;
+            SwapCheckOutcomeSuccessful?.Invoke(_currentState);
+            
         }
     }
 }

@@ -39,8 +39,17 @@ public class PostprocessingController : MonoBehaviour
  
  
  public WorldState currentState;
- 
- 
+
+ private void OnEnable()
+ {
+     LevelSwapManager.SwapCheckOutcomeSuccessful += SwitchPostProcessState;
+     
+ }
+
+ private void OnDisable()
+ {
+     LevelSwapManager.SwapCheckOutcomeSuccessful -= SwitchPostProcessState;
+ }
 
 
  private void Awake()
@@ -48,14 +57,7 @@ public class PostprocessingController : MonoBehaviour
      currentState = WorldState.Tragedy;
  }
 
- private void Update()
- {
-     if(Input.GetKeyDown(KeyCode.E))
-     {
-         SwitchPostProcessState();
-         
-     }
- }
+
 
 
 [ImageEffectOpaque]
@@ -137,18 +139,18 @@ public class PostprocessingController : MonoBehaviour
  }
 
 
- private void SwitchPostProcessState()
+ private void SwitchPostProcessState(WorldState state)
  {
-     switch (currentState)
+     switch (state)
      {
-         case WorldState.Comedy:
+         case WorldState.Tragedy:
          {
              //Change to tragedy
              StartCoroutine(ChangeToTragedy(1));
              currentState = WorldState.Tragedy;
              break;
          }
-         case WorldState.Tragedy:
+         case WorldState.Comedy:
          {
              StartCoroutine(ChangeToComedy(1));
              currentState = WorldState.Comedy;

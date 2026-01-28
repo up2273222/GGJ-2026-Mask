@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
@@ -21,11 +22,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isGrounded;
 
     [SerializeField] private float levelOffset;
+    
+    [SerializeField] private Mesh playerMesh;
+    
     private bool justSwitched;
     
     private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
 
+    
     void OnEnable()
     {
         //levelChangeManager.AddObserver(this);
@@ -136,9 +141,9 @@ public class PlayerController : MonoBehaviour
                 levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
                 return;
             }
-            rb.position = new Vector3(transform.position.x, transform.position.y + levelOffset, transform.position.z);
             levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
-            Debug.Log("Teleported Up to Comedy");
+            StartCoroutine(WaitTeleportComedy(1.5f));
+            
         }
         else
         {
@@ -149,11 +154,28 @@ public class PlayerController : MonoBehaviour
                 levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
                 return;
             }
-            rb.position = new Vector3(transform.position.x, transform.position.y - levelOffset, transform.position.z);
             levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
-            Debug.Log("Teleported Down to Tragedy");
+            StartCoroutine(WaitTeleportTragedy(1.5f));
+            
         }
         
         justSwitched = true;
     }
+
+    private IEnumerator WaitTeleportComedy(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        rb.position = new Vector3(transform.position.x, transform.position.y + levelOffset, transform.position.z);
+            
+        Debug.Log("Teleported Up to Comedy");
+    }
+
+    private IEnumerator WaitTeleportTragedy(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        rb.position = new Vector3(transform.position.x, transform.position.y - levelOffset, transform.position.z);
+            
+        Debug.Log("Teleported Down to Tragedy");
+    }
+    
 }
