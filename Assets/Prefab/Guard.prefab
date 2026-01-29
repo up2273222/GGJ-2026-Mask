@@ -115,9 +115,12 @@ MonoBehaviour:
   PlayerDetected: 0
   patrolpoints:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   targetpoint: 0
   movespeed: 5
   rotationSpeed: 5
+  GuardReference: {fileID: 6808127745451915229}
 --- !u!136 &30320976259723546
 CapsuleCollider:
   m_ObjectHideFlags: 0
