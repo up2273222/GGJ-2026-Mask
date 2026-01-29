@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Mesh playerMesh;
     
+    [SerializeField] Animator ratAnimator;
+    
     private bool justSwitched;
     private bool isTeleporting;
     
@@ -55,6 +57,8 @@ public class PlayerController : MonoBehaviour
     {
         Inputs();
         GroundCheck();
+        
+        ratAnimator.SetFloat("Speed", rb.linearVelocity.magnitude);
         
     }
     
