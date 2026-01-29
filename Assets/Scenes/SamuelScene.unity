@@ -12405,6 +12405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1522155546}
+  - component: {fileID: 1522155548}
   m_Layer: 6
   m_Name: CameraPosition
   m_TagString: Untagged
@@ -12420,13 +12421,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522155545}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.88, y: -3.25, z: -0.93}
+  m_LocalRotation: {x: -0.0000001872535, y: -0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.784829, y: -3.47, z: -1.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 814515241}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1818360608 &1522155548
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522155545}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 5.784829, y: -3.47, z: -1.46}
+  m_TranslationOffset: {x: 0, y: 2.8994367, z: -0.004937887}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 0
+  m_AffectTranslationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 1684202539}
+    weight: 1
 --- !u!1 &1541286150
 GameObject:
   m_ObjectHideFlags: 0
@@ -13713,6 +13734,11 @@ MonoBehaviour:
   targetpoint: 0
   movespeed: 5
   rotationSpeed: 5
+--- !u!4 &1684202539 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5334490512712266062, guid: a7e02a0d8c8558e4b984cf505120cc8c, type: 3}
+  m_PrefabInstance: {fileID: 1126552006}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1685171791
 GameObject:
   m_ObjectHideFlags: 0

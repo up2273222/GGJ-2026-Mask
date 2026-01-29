@@ -40,7 +40,7 @@ public class Guard : MonoBehaviour
 
     private void Update()
     {
-        ratAnimator.SetFloat("Speed", animatorspeed);
+        ratAnimator.SetFloat("Horizontal Speed", animatorspeed);
 
         if (patrolpoints.Length > 1)
         {

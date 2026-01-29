@@ -58,8 +58,9 @@ public class PlayerController : MonoBehaviour
         Inputs();
         GroundCheck();
         
-        ratAnimator.SetFloat("Speed", rb.linearVelocity.magnitude);
-        
+        ratAnimator.SetFloat("Horizontal Speed", rb.linearVelocity.magnitude);
+        ratAnimator.SetFloat("Vertical Speed", rb.linearVelocity.y);
+
     }
     
     void FixedUpdate()
