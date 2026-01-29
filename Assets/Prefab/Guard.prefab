@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3460e4afcaaa440b48ff958a978bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Guard
+  ratAnimator: {fileID: 0}
+  rb: {fileID: 0}
   Radius: 7
   Angle: 100
   PlayerReference: {fileID: 0}
@@ -115,12 +117,9 @@ MonoBehaviour:
   PlayerDetected: 0
   patrolpoints:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   targetpoint: 0
   movespeed: 5
   rotationSpeed: 5
-  GuardReference: {fileID: 6808127745451915229}
 --- !u!136 &30320976259723546
 CapsuleCollider:
   m_ObjectHideFlags: 0
