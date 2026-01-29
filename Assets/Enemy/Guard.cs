@@ -23,7 +23,6 @@ public class Guard : MonoBehaviour
     public int targetpoint;
     public float movespeed;
     public float rotationSpeed;
-    public GameObject GuardReference;
     
     private void Start()
     {
@@ -40,16 +39,19 @@ public class Guard : MonoBehaviour
         if (patrolpoints != null || patrolpoints.Length == 0 )
         {
            Vector3 targetPos = patrolpoints[targetpoint].position;
-                   Vector3 direction = (patrolpoints[targetpoint].position - transform.position).normalized;
+           Vector3 direction = (patrolpoints[targetpoint].position - transform.position).normalized;
+
+           if (direction != Vector3.zero)
+           {
+               Quaternion lookRotation = Quaternion.LookRotation(direction);
+               transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+           }
+           transform.position = Vector3.MoveTowards(transform.position, patrolpoints[targetpoint].position, movespeed * Time.deltaTime);
            
-                       Quaternion lookRotation = Quaternion.LookRotation(direction);
-                       transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
-                       transform.position = Vector3.MoveTowards(transform.position, patrolpoints[targetpoint].position, movespeed * Time.deltaTime);
-           
-                       if (Vector3.Distance(transform.position, targetPos) < 0.1f)
-                       {
-                           ChangeTargetPoint();
-                       } 
+           if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+           {
+           ChangeTargetPoint();
+           } 
         }
         
     }
@@ -68,13 +70,9 @@ public class Guard : MonoBehaviour
     #region FOVRoutine
     private IEnumerator GuardFOVRoutine()
     {
-        Debug.Log("GuardRoutineStarted");
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
-        Debug.Log("guarding");
-
         while (true)
         {
-            yield return wait;
+            yield return new WaitForSeconds(0.2f);
             FieldOfViewCheck();
         }
     }
@@ -87,33 +85,19 @@ public class Guard : MonoBehaviour
 
         if (rangeChecks.Length != 0)
         {
-            Debug.Log("range");
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, directionToTarget) < Angle / 2)
             {
-                Debug.Log("angle");
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, ObstructionMask))
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, ObstructionMask))
                 {
                     Debug.Log("player detected");
                     PlayerDetected = true;
                 }
-                else
-                {
-                    PlayerDetected = false;
-                }
             }
-            else
-            {
-                PlayerDetected = false;
-            }
-        }
-        else if(PlayerDetected)
-        {
-            PlayerDetected = false;
         }
     }
     #endregion
