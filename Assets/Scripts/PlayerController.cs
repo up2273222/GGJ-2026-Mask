@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Teleporting");
         if (newState == WorldState.Comedy)
         {
-            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y + levelOffset + 1.0f, transform.position.z), new Vector3(0.7f, 0.15f, 0.7f), Quaternion.identity).Length > 0;
+            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y + levelOffset + 1.0f, transform.position.z), new Vector3(0.4f, 0.75f, 1.4f), Quaternion.identity).Length > 0;
             if (isTeleportAreaBlocked)
             {
                 Debug.LogWarning("Area Not Viable for teleport");
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y - levelOffset + 1.0f, transform.position.z), new Vector3(0.7f, 0.15f, 0.7f), Quaternion.identity).Length > 0;
+            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y - levelOffset + 1.0f, transform.position.z), new Vector3(0.4f, 0.75f, 1.4f), Quaternion.identity).Length > 0;
             if (isTeleportAreaBlocked)
             {
                 Debug.LogWarning("Area Not Viable for teleport");
