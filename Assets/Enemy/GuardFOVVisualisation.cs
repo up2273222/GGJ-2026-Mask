@@ -31,6 +31,6 @@ public class GuardFOVVisualisation : Editor
     {
         angleInDegrees += eulerY;
 
-        return new Vector3(Mathf.Sign(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 }

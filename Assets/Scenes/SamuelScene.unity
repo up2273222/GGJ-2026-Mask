@@ -1976,7 +1976,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1752776288371206998, guid: bd6b0644ad0bb7c47b84f8a444762725, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.23
+      value: 4.22
       objectReference: {fileID: 0}
     - target: {fileID: 1752776288371206998, guid: bd6b0644ad0bb7c47b84f8a444762725, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1984,7 +1984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1752776288371206998, guid: bd6b0644ad0bb7c47b84f8a444762725, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33.2
+      value: 33.24
       objectReference: {fileID: 0}
     - target: {fileID: 1752776288371206998, guid: bd6b0644ad0bb7c47b84f8a444762725, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2016,7 +2016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3652489632637838713, guid: bd6b0644ad0bb7c47b84f8a444762725, type: 3}
       propertyPath: Angle
-      value: 31
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 3652489632637838713, guid: bd6b0644ad0bb7c47b84f8a444762725, type: 3}
       propertyPath: Radius
