@@ -12,10 +12,10 @@ public class GuardFOVVisualisation : Editor
         Guard fov = (Guard)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.Radius);
-
+        
         Vector3 viewAngle1 = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.Angle / 2);
         Vector3 viewAngle2 = DirectionFromAngle(fov.transform.eulerAngles.y, fov.Angle / 2);
-
+        
         Handles.color = Color.red;
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle1 * fov.Radius);
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle2 * fov.Radius);

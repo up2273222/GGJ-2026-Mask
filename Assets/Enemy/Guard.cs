@@ -19,7 +19,7 @@ public class Guard : MonoBehaviour
 
     [HeaderAttribute("Patrol")]
 
-    public Transform[] patrolpoints;
+    [SerializeField] Transform[] patrolpoints;
     public int targetpoint;
     public float movespeed;
     public float rotationSpeed;
@@ -37,17 +37,21 @@ public class Guard : MonoBehaviour
 
     private void Update()
     {
-        Vector3 targetPos = patrolpoints[targetpoint].position;
-        Vector3 direction = (patrolpoints[targetpoint].position - transform.position).normalized;
-
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
-            transform.position = Vector3.MoveTowards(transform.position, patrolpoints[targetpoint].position, movespeed * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, targetPos) < 0.1f)
-            {
-                ChangeTargetPoint();
-            }
+        if (patrolpoints != null || patrolpoints.Length == 0 )
+        {
+           Vector3 targetPos = patrolpoints[targetpoint].position;
+                   Vector3 direction = (patrolpoints[targetpoint].position - transform.position).normalized;
+           
+                       Quaternion lookRotation = Quaternion.LookRotation(direction);
+                       transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+                       transform.position = Vector3.MoveTowards(transform.position, patrolpoints[targetpoint].position, movespeed * Time.deltaTime);
+           
+                       if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+                       {
+                           ChangeTargetPoint();
+                       } 
+        }
+        
     }
 
     #region Patrol
