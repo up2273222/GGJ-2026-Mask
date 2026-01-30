@@ -71,7 +71,7 @@ Shader "Unlit/FogShader"
               
               
               float3 col = tex2D(_MainTex, i.uv).xyz;
-              float3 fogCol = lerp(unity_FogColor.xyz,col, fogFactor);
+              float3 fogCol = lerp(float3(0.25f, 0.32f, 0.35f),col, fogFactor);
               return float4(fogCol,1);
             }
             ENDCG
