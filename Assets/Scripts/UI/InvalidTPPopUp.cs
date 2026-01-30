@@ -1,15 +1,18 @@
 using System;
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class InvalidTPPopUp : MonoBehaviour
 {
+    private TextMeshProUGUI textMeshProUGUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.GameObject().SetActive(false);
+        textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
+        textMeshProUGUI.SetText("");
     }
 
     private void OnEnable()
@@ -26,14 +29,16 @@ public class InvalidTPPopUp : MonoBehaviour
 
     private void TPFailedPopUP()
     {
-        this.GameObject().SetActive(true);
+        Debug.LogWarning("Teleport UI SHould be here");
+        textMeshProUGUI.SetText("Teleport Failed - Space Blocked");
+        Debug.Log("Object visible");
         StartCoroutine(PopUpWait());
-        this.GameObject().SetActive(false);
-
     }
 
     private IEnumerator PopUpWait()
     {
         yield return new WaitForSeconds(1.5f);
+        Debug.Log("Object not visible");
+        textMeshProUGUI.SetText("");
     }
 }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+    public static event Action TeleportFailed;
+    
     [SerializeField] private Transform orientation;
     [SerializeField] private LevelSwapManager levelChangeManager;
     [SerializeField] private float moveSpeed;
@@ -145,11 +147,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Teleporting");
         if (newState == WorldState.Comedy)
         {
-            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y + levelOffset + 1.0f, transform.position.z), new Vector3(0.4f, 0.75f, 1.4f), Quaternion.identity).Length > 0;
+            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y + levelOffset + 1.0f, transform.position.z), new Vector3(0.15f, 0.25f, 0.2f), Quaternion.identity).Length > 0;
             if (isTeleportAreaBlocked)
             {
                 Debug.LogWarning("Area Not Viable for teleport");
                 levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
+                TeleportFailed?.Invoke();
                 isTeleporting = false;
                 return;
             }
@@ -159,11 +162,12 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y - levelOffset + 1.0f, transform.position.z), new Vector3(0.4f, 0.75f, 1.4f), Quaternion.identity).Length > 0;
+            bool isTeleportAreaBlocked = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y - levelOffset + 1.0f, transform.position.z), new Vector3(0.15f, 0.25f, 0.2f), Quaternion.identity).Length > 0;
             if (isTeleportAreaBlocked)
             {
                 Debug.LogWarning("Area Not Viable for teleport");
                 levelChangeManager.LevelSwitchSuccessful(!isTeleportAreaBlocked);
+                TeleportFailed?.Invoke();
                 isTeleporting = false;
                 return;
             }
