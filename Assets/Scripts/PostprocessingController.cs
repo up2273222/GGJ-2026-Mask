@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode, ImageEffectAllowedInSceneView]
@@ -38,6 +39,7 @@ public class PostprocessingController : MonoBehaviour
  
  
  
+ 
  public WorldState currentState;
 
  private void OnEnable()
@@ -52,22 +54,17 @@ public class PostprocessingController : MonoBehaviour
  }
 
 
- private void Awake()
+ private void Start()
  {
-     currentState = WorldState.Tragedy;
-     currentTemperature = tragedyTemperature;
-     currentTemperature = tragedyTemperature;
-     currentSaturationMult = tragedySaturationMult;
-     currentFogStart = tragedyFogStart;
-     currentFogEnd = tragedyFogEnd;
+     StartCoroutine(ChangeToComedy(0.1f));
  }
 
 
-
-
-[ImageEffectOpaque]
+ [ImageEffectOpaque]
  void OnRenderImage(RenderTexture src, RenderTexture dest)
  {
+  
+ 
      if (postProcessMaterial == null)
      {
          postProcessMaterial = new Material(postProcessShader);
