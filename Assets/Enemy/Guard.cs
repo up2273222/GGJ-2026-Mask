@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Guard : MonoBehaviour
 {
@@ -107,6 +108,7 @@ public class Guard : MonoBehaviour
                 {
                     Debug.Log("Player Detected");
                     PlayerDetected = true;
+                    SceneManager.LoadScene("SamuelScene");
                 }
             }
         }

@@ -55,6 +55,11 @@ public class PostprocessingController : MonoBehaviour
  private void Awake()
  {
      currentState = WorldState.Tragedy;
+     currentTemperature = tragedyTemperature;
+     currentTemperature = tragedyTemperature;
+     currentSaturationMult = tragedySaturationMult;
+     currentFogStart = tragedyFogStart;
+     currentFogEnd = tragedyFogEnd;
  }
 
 
