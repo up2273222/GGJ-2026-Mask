@@ -202,5 +202,10 @@ public class PlayerController : MonoBehaviour
         isTeleporting = false;
         Debug.Log("Teleported Down to Tragedy");
     }
+
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
     
 }

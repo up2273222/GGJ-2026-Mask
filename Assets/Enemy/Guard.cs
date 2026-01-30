@@ -9,6 +9,8 @@ public class Guard : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float animatorspeed;
 
+    [SerializeField] private GameObject lose;
+
     [HeaderAttribute("FOV")]
 
     public float Radius;
@@ -108,7 +110,9 @@ public class Guard : MonoBehaviour
                 {
                     Debug.Log("Player Detected");
                     PlayerDetected = true;
-                    SceneManager.LoadScene("SamuelScene");
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    lose.SetActive(true);
                 }
             }
         }
